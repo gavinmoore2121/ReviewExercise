@@ -1,7 +1,10 @@
 package com.servlets;
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -20,11 +23,20 @@ public class FileDisplayTool extends HttpServlet {
 		response.setContentType("text/html"); // Set the content type
 		PrintWriter pw = response.getWriter(); // Get stream to write data
 		
-		BufferedReader reader = new BufferedReader(new FileReader("Fitness.txt"));
+		// Find file
+		InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("Fitness.txt");
+		if (stream == null) {
+			System.out.println("öh fuck");
+		}
 		
-		reader.lines().forEach(e -> pw.println(e));
+		// Read from input stream and add to a string builder.
+		StringBuilder sb = new StringBuilder();
+		for (int ch; (ch = stream.read()) != -1; ) {
+		    sb.append((char) ch);
+		}
+		pw.append(sb);
 		
-		reader.close();
+		stream.close();
 		
 		pw.close();
 	}
