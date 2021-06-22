@@ -16,9 +16,9 @@ public class FileDisplayTool extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		response.setContentType("text/html"); // Set the content type
+		response.getWriter().append("Program printing successfully.");
+		response.setContentType("text"); // Set the content type
 		PrintWriter pw = response.getWriter(); // Get stream to write data
-		System.out.println("here");
 		
 		//BufferedReader reader = new BufferedReader(new FileReader("Fitness.txt"));
 		
