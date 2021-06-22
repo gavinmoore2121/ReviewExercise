@@ -23,8 +23,8 @@ public class FileDisplayTool extends HttpServlet {
 		response.setContentType("text/html"); // Set the content type
 		PrintWriter pw = response.getWriter(); // Get stream to write data
 		
-		// Find file
-		InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("Fitness.txt");
+		// Find HTML file
+		InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("Login.html");
 		if (stream == null) {
 			System.out.println("öh fuck");
 		}
