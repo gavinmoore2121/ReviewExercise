@@ -1,11 +1,9 @@
 package com.servlets;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,20 +22,27 @@ public class FileDisplayTool extends HttpServlet {
 		PrintWriter pw = response.getWriter(); // Get stream to write data
 		
 		// Find HTML file
+		try {
+			System.out.println(Paths.get(Thread.currentThread().getContextClassLoader().getResource("Login.html").toURI()));
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("Login.html");
 		if (stream == null) {
-			System.out.println("öh fuck");
+			System.out.println("File read error.");
+		}
+		else {
+			// Read from input stream and add to a string builder.
+			StringBuilder sb = new StringBuilder();
+			for (int ch; (ch = stream.read()) != -1; ) {
+				sb.append((char) ch);
+			}
+			pw.append(sb);
 		}
 		
-		// Read from input stream and add to a string builder.
-		StringBuilder sb = new StringBuilder();
-		for (int ch; (ch = stream.read()) != -1; ) {
-		    sb.append((char) ch);
-		}
-		pw.append(sb);
-		
+		// Close resources.
 		stream.close();
-		
 		pw.close();
 	}
 
